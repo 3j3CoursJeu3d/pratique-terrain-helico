@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class ControlerHelico : MonoBehaviour
+public class controlerHelico : MonoBehaviour
 {
     public float vitesseTourne;
     public float vitesseMonte;
