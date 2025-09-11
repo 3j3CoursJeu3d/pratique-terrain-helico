@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class cameraSuivi : MonoBehaviour
+public class cameraSuiveillance : MonoBehaviour
 {
     public Transform cible;
 

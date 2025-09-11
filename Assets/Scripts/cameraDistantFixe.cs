@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class cameraDistant : MonoBehaviour
+public class cameraDistantFixe : MonoBehaviour
 {
     public Transform cible;
     public Vector3 distance;
