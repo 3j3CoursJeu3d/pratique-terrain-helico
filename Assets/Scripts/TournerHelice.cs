@@ -2,33 +2,39 @@ using UnityEngine;
 
 public class TournerHelice : MonoBehaviour
 {
+    [Header("Configuration rotation")]
     public Vector3 vitesseRotation;
     public float vitesseMaxRotation;
     public float acceleration;
+
+    [Header("Contrôle")]
     public bool enMarche;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [Header("Décélération")]
+    public float deceleration = 50f;
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            enMarche = !enMarche;
-        }
-
         if (enMarche)
         {
-            if(vitesseRotation.y < vitesseMaxRotation)
+            if (vitesseRotation.y < vitesseMaxRotation)
             {
-                vitesseRotation.y += acceleration;
-
+                vitesseRotation.y += acceleration * Time.deltaTime;
+                vitesseRotation.y = Mathf.Min(vitesseRotation.y, vitesseMaxRotation);
             }
-            transform.Rotate(vitesseRotation, Space.Self);
+        }
+        else
+        {
+            if (vitesseRotation.y > 0)
+            {
+                vitesseRotation.y -= deceleration * Time.deltaTime;
+                vitesseRotation.y = Mathf.Max(vitesseRotation.y, 0f);
+            }
+        }
+
+        if (vitesseRotation.y > 0)
+        {
+            transform.Rotate(vitesseRotation * Time.deltaTime, Space.Self);
         }
     }
 }
