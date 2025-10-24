@@ -6,48 +6,54 @@ using UnityEngine.SceneManagement;
 public class controlerHelico : MonoBehaviour
 {
     [Header("Mouvements")]
-    public float vitesseTourne;
-    public float vitesseMonte;
-    private float vitesseAvance;
-    public float vitesseAvanceMax;
-    public float forceAcceleration;
+    public float vitesseTourne;             // vitesse de rotation gauche/droite
+    public float vitesseMonte;              // vitesse de montée/descente
+    private float vitesseAvance;            // vitesse vers l'avant
+    public float vitesseAvanceMax;          // limite de vitesse avant
+    public float forceAcceleration;         // force d'accélération
 
-    public GameObject uneHelice;
+    public GameObject uneHelice;            // référence visuelle pour la rotation
 
     [Header("Références objets")]
-    public GameObject refHeliceAvant;
-    public GameObject refHeliceArriere;
-    public GameObject gestionCameras;        // à activer post-explosion si souhaité
-    public GameObject objetMusiqueAmbiance;  // objet "Musique" à activer en jeu
-    public AudioClip sonBidon;
-    public GameObject explosion;
+    public GameObject refHeliceAvant;       // lien vers hélice avant
+    public GameObject refHeliceArriere;     // lien vers hélice arrière
+    public GameObject gestionCameras;       // gestion post-explosion
+    public GameObject objetMusiqueAmbiance; // musique du jeu
+    public AudioClip sonBidon;              // son lors du ravitaillement
+    public GameObject explosion;            // effet d'explosion
 
     [Header("UI / Audio")]
-    public TextMeshProUGUI affichageInfo;
-    public Image barreEssence;
+    public TextMeshProUGUI affichageInfo;   // texte d'information
+    public Image barreEssence;              // jauge d'essence
 
     [Header("Essence")]
-    public float essenceActuelle;
-    public float essenceMax;
-    public float consoParSeconde = 0.2f;
+    public float essenceActuelle;           // quantité d'essence actuelle
+    public float essenceMax;                // capacité maximale
+    public float consoParSeconde = 0.2f;    // consommation d’essence
 
     [Header("Relance après panne")]
-    public float delaiRelanceApresPanneEssence = 2f;
+    public float delaiRelanceApresPanneEssence = 2f; // délai avant relance automatique
 
     [Header("Paramètres de chute")]
-    public float dragChute = 0.0f;          // damping linéaire (faible pour chute franche)
-    public float angularDragChute = 0.05f;  // damping angulaire (faible)
-    public float masseLourde = 1000f;       // 75 → 1000 en panne/explosion
+    public float dragChute = 0.0f;          // résistance linéaire
+    public float angularDragChute = 0.05f;  // résistance angulaire
+    public float masseLourde = 1000f;       // masse lors de la panne
 
     [Header("Inclinaison visuelle")]
-    public float angleInclinaisonMax = 15f;
+    public float angleInclinaisonMax = 15f; // angle visuel max
     public float vitesseLerpInclinaison = 6f;
 
     [Header("Caméra de suivi fluide")]
-    public Transform cameraSuivi;
+    public Transform cameraSuivi;           // référence caméra
     public float facteurInclinaisonCam = 0.5f;
 
-    // États
+    [Header("Audio Hélice")]
+    public float vitesseRotationMax = 1000f; // vitesse max simulée des pales
+    public float fadeVitesse = 2.5f;         // vitesse de transition audio
+    public float pitchMin = 0.5f;
+    public float pitchMax = 1.0f;
+
+    // États du jeu
     public bool finJeu;
     private bool partieCommencee = false;
     private bool helicoptereActif = false;
@@ -55,13 +61,17 @@ public class controlerHelico : MonoBehaviour
     private bool panneEssence = false;
     private bool relancePartiePlanifiee = false;
 
-    // Internes
+    // Composants internes
     private Rigidbody rigidHelico;
     private AudioSource sonHelico;
+
+    // Variables internes
     private float essencePrecedente;
     private float vitesseZ = 0f;
+    private bool palesEnMarchePrev = false;
+    private float rotorFactor = 0f;
 
-    // Sauvegardes pour restaurer après panne
+    // Sauvegardes pour restaurer après une panne
     private float masseInitiale;
     private float linearDampingInitial;
     private float angularDampingInitial;
@@ -70,67 +80,90 @@ public class controlerHelico : MonoBehaviour
 
     void Start()
     {
+        // Récupère les composants du Rigidbody et AudioSource
         rigidHelico = GetComponent<Rigidbody>();
         sonHelico = GetComponent<AudioSource>();
 
-        // Sauvegarde des réglages d’origine
+        // Sauvegarde les réglages d'origine pour réinitialiser après une panne
         masseInitiale = rigidHelico.mass;
-        linearDampingInitial = rigidHelico.linearDamping;   // même nom que dans ton projet
-        angularDampingInitial = rigidHelico.angularDamping;  // idem
+        linearDampingInitial = rigidHelico.linearDamping;
+        angularDampingInitial = rigidHelico.angularDamping;
         contraintesInitiales = rigidHelico.constraints;
 
+        // Initialise l'essence
         essenceActuelle = essenceMax;
         essencePrecedente = essenceActuelle;
 
+        // Désactive la musique tant que le jeu n’a pas commencé
         if (objetMusiqueAmbiance != null)
             objetMusiqueAmbiance.SetActive(false);
 
-        if (sonHelico && sonHelico.isPlaying)
-            sonHelico.Stop();
+        // Prépare le son de l’hélico
+        if (sonHelico)
+        {
+            sonHelico.volume = 0f;
+            sonHelico.pitch = pitchMin;
+            if (sonHelico.isPlaying) sonHelico.Stop();
+        }
     }
 
     void Update()
     {
-        // Activer l'hélico à la demande après démarrage partie
+        // Ignore les entrées si la partie n’est pas démarrée
+        if (!DemarrerJeu.Demarre) return;
+
+        // Permet de couper ou réactiver le son global
+        if (Input.GetKeyDown(KeyCode.M))
+            AudioListener.pause = !AudioListener.pause;
+
+        // Démarrage de l'hélicoptère
         if (partieCommencee && !helicoptereActif && !finJeu)
         {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
+            if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || Input.GetKeyDown(KeyCode.Space))
                 ActiverHelicoptere();
-            }
         }
     }
 
     void FixedUpdate()
     {
-        // Détection panne d’essence
+        // Vérifie la panne d’essence
         if (essenceActuelle <= 0f)
             panneEssence = true;
 
+        // Récupère les hélices
+        var heliceAvant = refHeliceAvant ? refHeliceAvant.GetComponent<TournerHelice>() : null;
+        var heliceArriere = refHeliceArriere ? refHeliceArriere.GetComponent<TournerHelice>() : null;
+        bool palesEnMarche = (heliceAvant && heliceAvant.enMarche) || (heliceArriere && heliceArriere.enMarche);
+
+        // Gestion de la panne d’essence
         if (panneEssence)
         {
-            // Couper hélices + son, laisser tomber avec la gravité
-            var hA = refHeliceAvant ? refHeliceAvant.GetComponent<TournerHelice>() : null;
-            var hR = refHeliceArriere ? refHeliceArriere.GetComponent<TournerHelice>() : null;
-            if (hA) hA.enMarche = false;
-            if (hR) hR.enMarche = false;
+            if (heliceAvant) heliceAvant.enMarche = false;
+            if (heliceArriere) heliceArriere.enMarche = false;
 
             rigidHelico.useGravity = true;
             vitesseAvance = 0f;
 
+            // Rend l’hélico plus lourd et instable
             if (!masseBoostee)
             {
-                rigidHelico.mass = masseLourde;                 // 75 → 1000
-                rigidHelico.linearDamping = dragChute;          // faible frein
+                rigidHelico.mass = masseLourde;
+                rigidHelico.linearDamping = dragChute;
                 rigidHelico.angularDamping = angularDragChute;
                 rigidHelico.constraints = RigidbodyConstraints.None;
                 masseBoostee = true;
             }
 
-            if (sonHelico && sonHelico.isPlaying)
-                sonHelico.Stop();
+            // Couper progressivement le son
+            if (sonHelico)
+            {
+                sonHelico.volume = Mathf.MoveTowards(sonHelico.volume, 0f, fadeVitesse * Time.fixedDeltaTime);
+                sonHelico.pitch = Mathf.MoveTowards(sonHelico.pitch, pitchMin, fadeVitesse * Time.fixedDeltaTime);
+                if (sonHelico.isPlaying && sonHelico.volume <= 0.001f)
+                    sonHelico.Stop();
+            }
 
-            // relance rapide après contact sol (si tu gardes ce flow)
+            // Planifie une relance automatique après la chute
             if (auSol && !relancePartiePlanifiee)
             {
                 relancePartiePlanifiee = true;
@@ -141,34 +174,47 @@ public class controlerHelico : MonoBehaviour
                 affichageInfo.text = "Panne sèche !";
 
             essencePrecedente = essenceActuelle;
-            return; // pas d'inputs en panne
+            palesEnMarchePrev = false;
+            return;
         }
 
-        // Bloc vol normal / attente d’activation
+        // Si le jeu est en pause ou non démarré
         if (!partieCommencee || !helicoptereActif || finJeu)
         {
             if (affichageInfo != null && partieCommencee)
                 affichageInfo.text = helicoptereActif ? "Hélico actif" : "Appuyez sur Entrée";
+
+            // Fade out du son
+            if (sonHelico && sonHelico.isPlaying && !palesEnMarche)
+            {
+                sonHelico.volume = Mathf.MoveTowards(sonHelico.volume, 0f, fadeVitesse * Time.fixedDeltaTime);
+                sonHelico.pitch = Mathf.MoveTowards(sonHelico.pitch, pitchMin, fadeVitesse * Time.fixedDeltaTime);
+                if (sonHelico.volume <= 0.001f) sonHelico.Stop();
+            }
+
+            palesEnMarchePrev = palesEnMarche;
             return;
         }
 
-        // Vol actif si les hélices tournent
-        var tournerAvant = refHeliceAvant ? refHeliceAvant.GetComponent<TournerHelice>() : null;
-        if (tournerAvant != null && tournerAvant.enMarche)
+        // Vol actif
+        if (palesEnMarche)
         {
+            // Démarre le son au moment où les pales s’activent
+            if (sonHelico && !palesEnMarchePrev)
+            {
+                sonHelico.volume = 0f;
+                sonHelico.pitch = pitchMin;
+                sonHelico.Play();
+            }
+
+            // Consomme de l’essence
             essenceActuelle -= consoParSeconde * Time.fixedDeltaTime;
             essenceActuelle = Mathf.Max(0f, essenceActuelle);
-
             if (barreEssence) barreEssence.fillAmount = essenceActuelle / essenceMax;
 
             rigidHelico.useGravity = false;
 
-            if (sonHelico != null && !sonHelico.isPlaying)
-            {
-                sonHelico.volume = 0f;
-                sonHelico.Play();
-            }
-
+            // Contrôles de vol
             float forceRotation = Input.GetAxis("Horizontal") * vitesseTourne;
             float forceMonte = Input.GetAxis("Vertical") * vitesseMonte;
 
@@ -181,16 +227,27 @@ public class controlerHelico : MonoBehaviour
             rigidHelico.AddRelativeTorque(0f, forceRotation, 0f);
             rigidHelico.AddRelativeForce(0f, forceMonte, vitesseAvance);
 
-            if (sonHelico.isPlaying && sonHelico.volume < 1f)
-                sonHelico.volume += 0.1f;
+            // Ajuste le son selon la vitesse de rotation des hélices
+            float vitesseRot = LireVitesseRotation(heliceAvant, heliceArriere);
+            float speed01 = vitesseRot >= 0f
+                ? Mathf.InverseLerp(0f, Mathf.Max(0.0001f, vitesseRotationMax), vitesseRot)
+                : Mathf.MoveTowards(rotorFactor, 1f, 1.25f * Time.fixedDeltaTime);
 
-            // Inclinaison visuelle (bank)
+            float targetVol = Mathf.Clamp01(speed01);
+            float targetPitch = Mathf.Lerp(pitchMin, pitchMax, speed01);
+
+            if (sonHelico)
+            {
+                sonHelico.volume = Mathf.MoveTowards(sonHelico.volume, targetVol, fadeVitesse * Time.fixedDeltaTime);
+                sonHelico.pitch = Mathf.MoveTowards(sonHelico.pitch, targetPitch, fadeVitesse * Time.fixedDeltaTime);
+            }
+
+            // Inclinaison visuelle lors des virages
             float inputHoriz = Input.GetAxis("Horizontal");
             float angleZCible = -inputHoriz * angleInclinaisonMax;
 
             float angleZActuel = transform.localEulerAngles.z;
             if (angleZActuel > 180f) angleZActuel -= 360f;
-
             angleZActuel = Mathf.SmoothDampAngle(angleZActuel, angleZCible, ref vitesseZ, 1f);
 
             transform.localEulerAngles = new Vector3(
@@ -199,7 +256,7 @@ public class controlerHelico : MonoBehaviour
                 angleZActuel
             );
 
-            // Caméra suit l’inclinaison
+            // Fait légèrement suivre la caméra
             if (cameraSuivi != null)
             {
                 float angleCam = angleZActuel * facteurInclinaisonCam;
@@ -211,19 +268,32 @@ public class controlerHelico : MonoBehaviour
         }
         else
         {
-            // Hélices arrêtées → gravité
+            // Chute sans moteur
             rigidHelico.useGravity = true;
+            rotorFactor = Mathf.MoveTowards(rotorFactor, 0f, 1.25f * Time.fixedDeltaTime);
 
-            if (sonHelico && sonHelico.isPlaying && sonHelico.volume > 0f)
-                sonHelico.volume -= 0.01f;
-            else if (sonHelico)
-                sonHelico.Stop();
+            if (sonHelico && sonHelico.isPlaying)
+            {
+                sonHelico.volume = Mathf.MoveTowards(sonHelico.volume, 0f, fadeVitesse * Time.fixedDeltaTime);
+                sonHelico.pitch = Mathf.MoveTowards(sonHelico.pitch, pitchMin, fadeVitesse * Time.fixedDeltaTime);
+                if (sonHelico.volume <= 0.001f) sonHelico.Stop();
+            }
         }
 
+        // Affiche la vitesse à l’écran
         if (affichageInfo != null)
             affichageInfo.text = rigidHelico.linearVelocity.magnitude.ToString("0.0");
 
         essencePrecedente = essenceActuelle;
+        palesEnMarchePrev = palesEnMarche;
+    }
+
+    // Lecture de la vitesse de rotation des pales (si exposée par TournerHelice)
+    float LireVitesseRotation(TournerHelice heliceAvant, TournerHelice heliceArriere)
+    {
+        var helice = heliceAvant ? heliceAvant : heliceArriere;
+        if (helice == null) return -1f;
+        return -1f; // à adapter selon le script TournerHelice
     }
 
     private void OnCollisionStay(Collision infosCollision)
@@ -242,36 +312,28 @@ public class controlerHelico : MonoBehaviour
     {
         if (infoCollision.gameObject.tag == "bidon")
         {
-            // plein déjà ?
             bool dejaPlein = essenceActuelle >= essenceMax - 0.0001f;
 
+            // Remplissage d’essence
             if (!dejaPlein)
             {
-                // Remplir à fond
                 essenceActuelle = essenceMax;
                 if (barreEssence) barreEssence.fillAmount = 1f;
-
-                // Son de pickup seulement si on a vraiment ravitaillé
                 if (sonHelico && sonBidon) sonHelico.PlayOneShot(sonBidon);
 
-                // Si on était en panne, restaurer l'état physique de base
+                // Si on était en panne, restaure les paramètres physiques
                 if (panneEssence)
                 {
                     panneEssence = false;
-                    relancePartiePlanifiee = false; // évite un reload programmé
+                    relancePartiePlanifiee = false;
 
-                    // Restaure masse/dampings/contraintes d’origine
                     rigidHelico.mass = masseInitiale;
                     rigidHelico.linearDamping = linearDampingInitial;
                     rigidHelico.angularDamping = angularDampingInitial;
                     rigidHelico.constraints = contraintesInitiales;
                     masseBoostee = false;
-
-                    // On n'allume pas automatiquement les hélices ici
                 }
             }
-
-            // Dans tous les cas, le bidon disparaît
             Destroy(infoCollision.gameObject);
         }
     }
@@ -280,24 +342,23 @@ public class controlerHelico : MonoBehaviour
     {
         float vitesseDeplacement = rigidHelico.linearVelocity.magnitude;
 
-        // Explosion uniquement à l'impact avec décor (si en jeu)
+        // Explosion si impact violent avec le décor
         if (infosCollision.gameObject.tag == "décor" && vitesseDeplacement > 0.25f && !finJeu && helicoptereActif)
-        {
             ExploserHelico();
-        }
     }
 
     private void ActiverHelicoptere()
     {
+        if (helicoptereActif) return;
+
         helicoptereActif = true;
 
-        var hA = refHeliceAvant ? refHeliceAvant.GetComponent<TournerHelice>() : null;
-        var hR = refHeliceArriere ? refHeliceArriere.GetComponent<TournerHelice>() : null;
-        if (hA) hA.enMarche = true;
-        if (hR) hR.enMarche = true;
+        var heliceAvant = refHeliceAvant ? refHeliceAvant.GetComponent<TournerHelice>() : null;
+        var heliceArriere = refHeliceArriere ? refHeliceArriere.GetComponent<TournerHelice>() : null;
+        if (heliceAvant) heliceAvant.enMarche = true;
+        if (heliceArriere) heliceArriere.enMarche = true;
     }
 
-    // Appelé par DemarrerJeu
     public void DemarrerPartie()
     {
         partieCommencee = true;
@@ -316,21 +377,21 @@ public class controlerHelico : MonoBehaviour
         SceneManager.LoadScene(maSceneActuelle.name);
     }
 
-    // Minuteur → simuler panne (sans explosion)
     public void DeclencherPanneEssence()
     {
-        essenceActuelle = 0f; // FixedUpdate gère la suite
+        essenceActuelle = 0f;
     }
 
+    // Déclenche une explosion visuelle et sonore
     public void ExploserHelico()
     {
         if (finJeu) return;
         finJeu = true;
 
-        var hA = refHeliceAvant ? refHeliceAvant.GetComponent<TournerHelice>() : null;
-        var hR = refHeliceArriere ? refHeliceArriere.GetComponent<TournerHelice>() : null;
-        if (hA) hA.enMarche = false;
-        if (hR) hR.enMarche = false;
+        var heliceAvant = refHeliceAvant ? refHeliceAvant.GetComponent<TournerHelice>() : null;
+        var heliceArriere = refHeliceArriere ? refHeliceArriere.GetComponent<TournerHelice>() : null;
+        if (heliceAvant) heliceAvant.enMarche = false;
+        if (heliceArriere) heliceArriere.enMarche = false;
 
         if (sonHelico && sonHelico.isPlaying)
             sonHelico.Stop();
@@ -348,7 +409,7 @@ public class controlerHelico : MonoBehaviour
 
         if (!masseBoostee)
         {
-            rigidHelico.mass = masseLourde; // lourdeur post-impact (optionnel)
+            rigidHelico.mass = masseLourde;
             masseBoostee = true;
         }
 
@@ -359,6 +420,7 @@ public class controlerHelico : MonoBehaviour
         if (gestionCameras != null)
             gestionCameras.SetActive(true);
 
-        Invoke(nameof(RelancerPartie), 9f);
+        // Relance la scène après un délai
+        Invoke(nameof(RelancerPartie), 6f);
     }
 }

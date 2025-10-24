@@ -6,6 +6,7 @@ TagManager:
   tags:
   - bidon
   - "d\xE9cor"
+  - drone
   layers:
   - Default
   - TransparentFX

@@ -4,56 +4,57 @@ using TMPro;
 public class CompteurDescendant : MonoBehaviour
 {
     [Header("Références")]
-    public TextMeshProUGUI zoneTexteTemps;
-    public controlerHelico controleurHelicoptere;
+    public TextMeshProUGUI zoneTexteTemps;   // Zone d’affichage du temps à l’écran
+    public controlerHelico controleurHelicoptere; // Référence pour signaler la fin du temps
 
-    [Header("Configuration minuterie")]
-    public int valeurInitialeMinuteur = 120;
+    [Header("Configuration du minuteur")]
+    public int valeurInitialeMinuteur = 120; // Temps de départ en secondes
 
     private int tempsRestant;
     private bool compteurEnCours = false;
 
     void Awake()
     {
+        // Prépare le compteur dès le chargement
         ReinitialiserCompteur();
     }
 
+    // Lance le compte à rebours si pas déjà en cours
     public void Demarrer()
     {
         if (compteurEnCours) return;
 
         compteurEnCours = true;
         ReinitialiserCompteur();
-        InvokeRepeating(nameof(DecrémenterCompteur), 1f, 1f);
+        InvokeRepeating(nameof(DecrementerCompteur), 1f, 1f); // Appelle chaque seconde
     }
 
-    private void DecrémenterCompteur()
+    // Diminue le temps restant et déclenche la panne quand il atteint 0
+    private void DecrementerCompteur()
     {
-        if (tempsRestant > 0)
+        if (tempsRestant <= 0) return;
+
+        tempsRestant--;
+        AfficherTemps(tempsRestant);
+
+        if (tempsRestant == 0)
         {
-            tempsRestant--;
-            AfficherTemps(tempsRestant);
+            CancelInvoke(nameof(DecrementerCompteur));
+            compteurEnCours = false;
 
-            if (tempsRestant == 0)
-            {
-                CancelInvoke(nameof(DecrémenterCompteur));
-                compteurEnCours = false;
-
-                if (controleurHelicoptere != null)
-                {
-                    // ⇩⇩⇩ CHANGEMENT : panne sèche, pas explosion
-                    controleurHelicoptere.DeclencherPanneEssence();
-                }
-            }
+            if (controleurHelicoptere != null)
+                controleurHelicoptere.DeclencherPanneEssence(); // Fin du temps → panne sèche
         }
     }
 
+    // Remet le minuteur à sa valeur initiale
     private void ReinitialiserCompteur()
     {
         tempsRestant = Mathf.Max(0, valeurInitialeMinuteur);
         AfficherTemps(tempsRestant);
     }
 
+    // Met à jour le texte à l’écran
     private void AfficherTemps(int valeur)
     {
         if (zoneTexteTemps != null)

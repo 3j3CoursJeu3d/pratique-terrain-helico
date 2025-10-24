@@ -1,0 +1,848 @@
+fileFormatVersion: 2
+guid: 435bdebd043f94b8d97d6f2b93ad5b9c
+SketchUpImporter:
+  serializedVersion: 24200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: Component#1
+  - first:
+      1: 100002
+    second: Component#10
+  - first:
+      1: 100004
+    second: Component#10 1
+  - first:
+      1: 100006
+    second: Component#10 2
+  - first:
+      1: 100008
+    second: Component#20
+  - first:
+      1: 100010
+    second: Component#21
+  - first:
+      1: 100012
+    second: Component#21 1
+  - first:
+      1: 100014
+    second: Component#21 2
+  - first:
+      1: 100016
+    second: Component#21 3
+  - first:
+      1: 100018
+    second: Component#21 4
+  - first:
+      1: 100020
+    second: Component#21 5
+  - first:
+      1: 100022
+    second: Component#22
+  - first:
+      1: 100024
+    second: Component#22 1
+  - first:
+      1: 100026
+    second: Component#22 2
+  - first:
+      1: 100028
+    second: Component#22 3
+  - first:
+      1: 100030
+    second: Component#22 4
+  - first:
+      1: 100032
+    second: Component#22 5
+  - first:
+      1: 100034
+    second: Component#22 6
+  - first:
+      1: 100036
+    second: Component#22 7
+  - first:
+      1: 100038
+    second: Component#23
+  - first:
+      1: 100040
+    second: Component#24
+  - first:
+      1: 100042
+    second: Component#24 1
+  - first:
+      1: 100044
+    second: Component#24 2
+  - first:
+      1: 100046
+    second: Component#25
+  - first:
+      1: 100048
+    second: Component#30
+  - first:
+      1: 100050
+    second: Component#31
+  - first:
+      1: 100052
+    second: Component#32
+  - first:
+      1: 100054
+    second: Component#32 1
+  - first:
+      1: 100056
+    second: Component#32 2
+  - first:
+      1: 100058
+    second: Component#32 3
+  - first:
+      1: 100060
+    second: Component#32 4
+  - first:
+      1: 100062
+    second: Component#32 5
+  - first:
+      1: 100064
+    second: Component#32 6
+  - first:
+      1: 100066
+    second: Component#32 7
+  - first:
+      1: 100068
+    second: Component#33
+  - first:
+      1: 100070
+    second: Component#33 1
+  - first:
+      1: 100072
+    second: Component#33 2
+  - first:
+      1: 100074
+    second: Component#33 3
+  - first:
+      1: 100076
+    second: Component#33 4
+  - first:
+      1: 100078
+    second: Component#33 5
+  - first:
+      1: 100080
+    second: Component#33 6
+  - first:
+      1: 100082
+    second: Component#33 7
+  - first:
+      1: 100084
+    second: Component#34
+  - first:
+      1: 100086
+    second: Component#35
+  - first:
+      1: 100088
+    second: Component#36
+  - first:
+      1: 100090
+    second: Component#37
+  - first:
+      1: 100092
+    second: Component#38
+  - first:
+      1: 100094
+    second: Component#5
+  - first:
+      1: 100096
+    second: Component#5 1
+  - first:
+      1: 100098
+    second: Component#5 2
+  - first:
+      1: 100100
+    second: Component#6
+  - first:
+      1: 100102
+    second: Component#6 1
+  - first:
+      1: 100104
+    second: Component#6 2
+  - first:
+      1: 100106
+    second: Component#6 3
+  - first:
+      1: 100108
+    second: Component#6 4
+  - first:
+      1: 100110
+    second: Component#6 5
+  - first:
+      1: 100112
+    second: Component#7
+  - first:
+      1: 100114
+    second: Component#7 1
+  - first:
+      1: 100116
+    second: Component#7 2
+  - first:
+      1: 100118
+    second: Component#8
+  - first:
+      1: 100120
+    second: Component#8 1
+  - first:
+      1: 100122
+    second: Component#8 2
+  - first:
+      1: 100124
+    second: Component#9
+  - first:
+      1: 100126
+    second: //RootNode
+  - first:
+      4: 400000
+    second: Component#1
+  - first:
+      4: 400002
+    second: Component#10
+  - first:
+      4: 400004
+    second: Component#10 1
+  - first:
+      4: 400006
+    second: Component#10 2
+  - first:
+      4: 400008
+    second: Component#20
+  - first:
+      4: 400010
+    second: Component#21
+  - first:
+      4: 400012
+    second: Component#21 1
+  - first:
+      4: 400014
+    second: Component#21 2
+  - first:
+      4: 400016
+    second: Component#21 3
+  - first:
+      4: 400018
+    second: Component#21 4
+  - first:
+      4: 400020
+    second: Component#21 5
+  - first:
+      4: 400022
+    second: Component#22
+  - first:
+      4: 400024
+    second: Component#22 1
+  - first:
+      4: 400026
+    second: Component#22 2
+  - first:
+      4: 400028
+    second: Component#22 3
+  - first:
+      4: 400030
+    second: Component#22 4
+  - first:
+      4: 400032
+    second: Component#22 5
+  - first:
+      4: 400034
+    second: Component#22 6
+  - first:
+      4: 400036
+    second: Component#22 7
+  - first:
+      4: 400038
+    second: Component#23
+  - first:
+      4: 400040
+    second: Component#24
+  - first:
+      4: 400042
+    second: Component#24 1
+  - first:
+      4: 400044
+    second: Component#24 2
+  - first:
+      4: 400046
+    second: Component#25
+  - first:
+      4: 400048
+    second: Component#30
+  - first:
+      4: 400050
+    second: Component#31
+  - first:
+      4: 400052
+    second: Component#32
+  - first:
+      4: 400054
+    second: Component#32 1
+  - first:
+      4: 400056
+    second: Component#32 2
+  - first:
+      4: 400058
+    second: Component#32 3
+  - first:
+      4: 400060
+    second: Component#32 4
+  - first:
+      4: 400062
+    second: Component#32 5
+  - first:
+      4: 400064
+    second: Component#32 6
+  - first:
+      4: 400066
+    second: Component#32 7
+  - first:
+      4: 400068
+    second: Component#33
+  - first:
+      4: 400070
+    second: Component#33 1
+  - first:
+      4: 400072
+    second: Component#33 2
+  - first:
+      4: 400074
+    second: Component#33 3
+  - first:
+      4: 400076
+    second: Component#33 4
+  - first:
+      4: 400078
+    second: Component#33 5
+  - first:
+      4: 400080
+    second: Component#33 6
+  - first:
+      4: 400082
+    second: Component#33 7
+  - first:
+      4: 400084
+    second: Component#34
+  - first:
+      4: 400086
+    second: Component#35
+  - first:
+      4: 400088
+    second: Component#36
+  - first:
+      4: 400090
+    second: Component#37
+  - first:
+      4: 400092
+    second: Component#38
+  - first:
+      4: 400094
+    second: Component#5
+  - first:
+      4: 400096
+    second: Component#5 1
+  - first:
+      4: 400098
+    second: Component#5 2
+  - first:
+      4: 400100
+    second: Component#6
+  - first:
+      4: 400102
+    second: Component#6 1
+  - first:
+      4: 400104
+    second: Component#6 2
+  - first:
+      4: 400106
+    second: Component#6 3
+  - first:
+      4: 400108
+    second: Component#6 4
+  - first:
+      4: 400110
+    second: Component#6 5
+  - first:
+      4: 400112
+    second: Component#7
+  - first:
+      4: 400114
+    second: Component#7 1
+  - first:
+      4: 400116
+    second: Component#7 2
+  - first:
+      4: 400118
+    second: Component#8
+  - first:
+      4: 400120
+    second: Component#8 1
+  - first:
+      4: 400122
+    second: Component#8 2
+  - first:
+      4: 400124
+    second: Component#9
+  - first:
+      4: 400126
+    second: //RootNode
+  - first:
+      23: 2300000
+    second: Component#1
+  - first:
+      23: 2300002
+    second: Component#21
+  - first:
+      23: 2300004
+    second: Component#21 1
+  - first:
+      23: 2300006
+    second: Component#21 2
+  - first:
+      23: 2300008
+    second: Component#21 3
+  - first:
+      23: 2300010
+    second: Component#21 4
+  - first:
+      23: 2300012
+    second: Component#21 5
+  - first:
+      23: 2300014
+    second: Component#22
+  - first:
+      23: 2300016
+    second: Component#22 1
+  - first:
+      23: 2300018
+    second: Component#22 2
+  - first:
+      23: 2300020
+    second: Component#22 3
+  - first:
+      23: 2300022
+    second: Component#22 4
+  - first:
+      23: 2300024
+    second: Component#22 5
+  - first:
+      23: 2300026
+    second: Component#22 6
+  - first:
+      23: 2300028
+    second: Component#22 7
+  - first:
+      23: 2300030
+    second: Component#24
+  - first:
+      23: 2300032
+    second: Component#24 1
+  - first:
+      23: 2300034
+    second: Component#24 2
+  - first:
+      23: 2300036
+    second: Component#25
+  - first:
+      23: 2300038
+    second: Component#33
+  - first:
+      23: 2300040
+    second: Component#33 1
+  - first:
+      23: 2300042
+    second: Component#33 2
+  - first:
+      23: 2300044
+    second: Component#33 3
+  - first:
+      23: 2300046
+    second: Component#33 4
+  - first:
+      23: 2300048
+    second: Component#33 5
+  - first:
+      23: 2300050
+    second: Component#33 6
+  - first:
+      23: 2300052
+    second: Component#33 7
+  - first:
+      23: 2300054
+    second: Component#35
+  - first:
+      23: 2300056
+    second: Component#36
+  - first:
+      23: 2300058
+    second: Component#37
+  - first:
+      23: 2300060
+    second: Component#38
+  - first:
+      23: 2300062
+    second: Component#5
+  - first:
+      23: 2300064
+    second: Component#5 1
+  - first:
+      23: 2300066
+    second: Component#5 2
+  - first:
+      23: 2300068
+    second: Component#6
+  - first:
+      23: 2300070
+    second: Component#6 1
+  - first:
+      23: 2300072
+    second: Component#6 2
+  - first:
+      23: 2300074
+    second: Component#6 3
+  - first:
+      23: 2300076
+    second: Component#6 4
+  - first:
+      23: 2300078
+    second: Component#6 5
+  - first:
+      23: 2300080
+    second: Component#8
+  - first:
+      23: 2300082
+    second: Component#8 1
+  - first:
+      23: 2300084
+    second: Component#8 2
+  - first:
+      33: 3300000
+    second: Component#1
+  - first:
+      33: 3300002
+    second: Component#21
+  - first:
+      33: 3300004
+    second: Component#21 1
+  - first:
+      33: 3300006
+    second: Component#21 2
+  - first:
+      33: 3300008
+    second: Component#21 3
+  - first:
+      33: 3300010
+    second: Component#21 4
+  - first:
+      33: 3300012
+    second: Component#21 5
+  - first:
+      33: 3300014
+    second: Component#22
+  - first:
+      33: 3300016
+    second: Component#22 1
+  - first:
+      33: 3300018
+    second: Component#22 2
+  - first:
+      33: 3300020
+    second: Component#22 3
+  - first:
+      33: 3300022
+    second: Component#22 4
+  - first:
+      33: 3300024
+    second: Component#22 5
+  - first:
+      33: 3300026
+    second: Component#22 6
+  - first:
+      33: 3300028
+    second: Component#22 7
+  - first:
+      33: 3300030
+    second: Component#24
+  - first:
+      33: 3300032
+    second: Component#24 1
+  - first:
+      33: 3300034
+    second: Component#24 2
+  - first:
+      33: 3300036
+    second: Component#25
+  - first:
+      33: 3300038
+    second: Component#33
+  - first:
+      33: 3300040
+    second: Component#33 1
+  - first:
+      33: 3300042
+    second: Component#33 2
+  - first:
+      33: 3300044
+    second: Component#33 3
+  - first:
+      33: 3300046
+    second: Component#33 4
+  - first:
+      33: 3300048
+    second: Component#33 5
+  - first:
+      33: 3300050
+    second: Component#33 6
+  - first:
+      33: 3300052
+    second: Component#33 7
+  - first:
+      33: 3300054
+    second: Component#35
+  - first:
+      33: 3300056
+    second: Component#36
+  - first:
+      33: 3300058
+    second: Component#37
+  - first:
+      33: 3300060
+    second: Component#38
+  - first:
+      33: 3300062
+    second: Component#5
+  - first:
+      33: 3300064
+    second: Component#5 1
+  - first:
+      33: 3300066
+    second: Component#5 2
+  - first:
+      33: 3300068
+    second: Component#6
+  - first:
+      33: 3300070
+    second: Component#6 1
+  - first:
+      33: 3300072
+    second: Component#6 2
+  - first:
+      33: 3300074
+    second: Component#6 3
+  - first:
+      33: 3300076
+    second: Component#6 4
+  - first:
+      33: 3300078
+    second: Component#6 5
+  - first:
+      33: 3300080
+    second: Component#8
+  - first:
+      33: 3300082
+    second: Component#8 1
+  - first:
+      33: 3300084
+    second: Component#8 2
+  - first:
+      43: 4300000
+    second: Mesh Component#1
+  - first:
+      43: 4300002
+    second: Mesh Component#22
+  - first:
+      43: 4300004
+    second: Mesh Component#35
+  - first:
+      43: 4300006
+    second: Mesh Component#38
+  - first:
+      43: 4300008
+    second: Mesh Component#36
+  - first:
+      43: 4300010
+    second: Mesh Component#37
+  - first:
+      43: 4300012
+    second: Mesh Component#8
+  - first:
+      43: 4300014
+    second: Mesh Component#6
+  - first:
+      43: 4300016
+    second: Mesh Component#5
+  - first:
+      43: 4300018
+    second: Mesh Component#24
+  - first:
+      43: 4300020
+    second: Mesh Component#33
+  - first:
+      43: 4300022
+    second: Mesh Component#21
+  - first:
+      43: 4300024
+    second: Mesh Component#25
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Color_000]'
+    second: {fileID: 2100000, guid: d427895095e3447cbbda364467f62a62, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Color_003]'
+    second: {fileID: 2100000, guid: cc6794921da634c79bced0044719f116, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Color_003]1'
+    second: {fileID: 2100000, guid: a5a50a9bb1b6c4ddfa9397ec3cff22a2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Color_005]'
+    second: {fileID: 2100000, guid: 9c3a73af37fd34df09ee9c5b556efe57, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Color_007]'
+    second: {fileID: 2100000, guid: 7c9445d41daac4ebb923087ec8980008, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Color_A03]'
+    second: {fileID: 2100000, guid: 1ad2f077914b84eac91ec1d802af224e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: '[Color_G08]'
+    second: {fileID: 2100000, guid: 1c9a9a8d80bbb497fa9e62a4bb1b5640, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: New Bitmap Image
+    second: {fileID: 2800000, guid: ff23dd28468004e7fbd90f5284e6a45a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: New Bitmap Image_tint0x29405BFF
+    second: {fileID: 2800000, guid: 950720c8029b94d8b992af9e915999f4, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Wraith tracker (1)
+    second: {fileID: 2800000, guid: f7fc6df3919eb49dda7a19108a1348ab, type: 3}
+  materials:
+    materialImportMode: 1
+    materialName: 2
+    materialSearch: 0
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 2.54
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
+    meshOptimizationFlags: -1
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 0
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 2.54
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 0
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e0000001f000000200000002100000022000000230000002400000025000000260000002700000028000000290000002a0000002b0000002c0000002d0000002e0000002f000000300000003100000032000000330000003400000035000000360000003700000038000000390000003a0000003b0000003c0000003d0000003e0000003f000000400000004100000042000000430000004400000045000000460000004700000048000000490000004a0000004b0000004c0000004d0000004e0000004f000000500000005100000052000000530000005400000055000000560000005700000058000000590000005a0000005b0000005c0000005d0000005e0000005f000000600000006100000062000000630000006400000065000000660000006700000068000000690000006a000000
+  assetHash:
+    serializedVersion: 2
+    Hash: 0710583fff38e55e15cc263fef70226a
+  fileUnit: 0
